@@ -1,0 +1,21 @@
+{
+  "name": "expReport",
+  "module": "dbconnector",
+  "action": "connect",
+  "options": {
+    "client": "mssql",
+    "connection": {
+      "host": "WST-FLN-NB-25\\MSSQLSERVER2019",
+      "port": 1433,
+      "user": "wappler",
+      "password": "wappler123",
+      "database": "Exp_Report_Modulo",
+      "encrypt": false
+    },
+    "tz": "utc",
+    "meta": {}
+  },
+  "fileName": "expReport.json",
+  "actionFilePath": "file:///C:/Users/filipe.zulian/OneDrive%20-%20Water%20Services%20And%20Technologies%20Ltda/%C3%81rea%20de%20Trabalho/ExpenseReport/app/modules/connections/expReport.json",
+  "serverType": "node"
+}

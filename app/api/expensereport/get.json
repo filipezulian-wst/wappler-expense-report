@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ],
+    "$_PARAM": [
+      {
+        "type": "text",
+        "name": "new"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "custom",
+      "module": "dbupdater",
+      "action": "custom",
+      "options": {
+        "connection": "expReport",
+        "sql": {
+          "query": "SELECT\n    s.status_name,\n    pe.totalexpense,\n    c.currency_id,\n    pe.createdat,\n    pe.editable\nFROM\n    project_expense pe\nJOIN\n    status s ON pe.proexp_status = s.status_id\nleft join\n\tcurrency c on pe.currency = c.currency_id\nORDER BY\n    pe.proexp_status, pe.editable;\n",
+          "params": []
+        },
+        "test": true
+      },
+      "output": true,
+      "meta": [
+        {
+          "name": "status_name",
+          "type": "text"
+        },
+        {
+          "name": "totalexpense",
+          "type": "number"
+        },
+        {
+          "name": "currency_id",
+          "type": "number"
+        },
+        {
+          "name": "createdat",
+          "type": "datetime"
+        },
+        {
+          "name": "editable",
+          "type": "boolean"
+        }
+      ]
+    }
+  }
+}

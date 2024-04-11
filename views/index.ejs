@@ -1,0 +1,32 @@
+<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="index" appConnect="local" components="{dmxBootstrap5Alert:{},dmxBootstrap5TableGenerator:{},dmxStateManagement:{}}" -->
+<dmx-serverconnect id="getExp" url="/api/expensereport/get" dmx-param:sort=""></dmx-serverconnect>
+
+<main>
+    <div class="container">
+        <div class="d-flex">
+            <table class="table table-striped table-bordered table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th>Status name</th>
+                        <th>Totalexpense</th>
+                        <th>Currency</th>
+                        <th>Createdat</th>
+                        <th>Editable</th>
+                    </tr>
+                </thead>
+                <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="getExp.data.custom" id="tableRepeat2">
+                    <tr>
+                        <td dmx-text="status_name"></td>
+                        <td dmx-text="totalexpense"></td>
+                        <td dmx-text="currency_id"></td>
+                        <td dmx-text="createdat"></td>
+                        <td dmx-text="editable"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+
+<meta name="ac:route" content="/">

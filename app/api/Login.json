@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "custom",
+      "module": "dbupdater",
+      "action": "custom",
+      "options": {
+        "connection": "expReport",
+        "sql": {
+          "query": "select u.id, u.name from exp_user u where id = 1",
+          "params": []
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "name": "id",
+          "type": "number"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        }
+      ]
+    }
+  }
+}

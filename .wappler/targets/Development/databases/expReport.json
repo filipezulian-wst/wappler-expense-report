@@ -1,0 +1,295 @@
+{
+  "type": "mssql",
+  "connection": {
+    "host": "WST-FLN-NB-25\\MSSQLSERVER2019",
+    "port": 1433,
+    "user": "wappler",
+    "password": "wappler123",
+    "database": "Exp_Report_Modulo",
+    "encrypt": false
+  },
+  "direct": true,
+  "schema": {
+    "tables": {
+      "dbo.project": {
+        "db": {
+          "name": "project",
+          "schema": "dbo"
+        },
+        "columns": {
+          "project_id": {
+            "db": {
+              "type": "bigIncrements",
+              "primary": "PRIMARY",
+              "nullable": false
+            }
+          },
+          "project_name": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "nullable": false
+            }
+          },
+          "project_desc": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "nullable": false
+            }
+          }
+        },
+        "refs": {
+          "dbo.expense_line": "project_id"
+        }
+      },
+      "dbo.ledger_type": {
+        "db": {
+          "name": "ledger_type",
+          "schema": "dbo"
+        },
+        "columns": {
+          "ledger_id": {
+            "db": {
+              "type": "increments",
+              "primary": "PRIMARY",
+              "nullable": false
+            }
+          },
+          "ledger_type": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "nullable": false
+            }
+          }
+        },
+        "refs": {
+          "dbo.expense_line": "ledger_id"
+        }
+      },
+      "dbo.status": {
+        "db": {
+          "name": "status",
+          "schema": "dbo"
+        },
+        "columns": {
+          "status_id": {
+            "db": {
+              "type": "increments",
+              "primary": "PRIMARY",
+              "nullable": false
+            }
+          },
+          "status_name": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "nullable": false
+            }
+          }
+        }
+      },
+      "dbo.currency": {
+        "db": {
+          "name": "currency",
+          "schema": "dbo"
+        },
+        "columns": {
+          "currency_id": {
+            "db": {
+              "type": "increments",
+              "primary": "PRIMARY",
+              "nullable": false
+            }
+          },
+          "currency_type": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "nullable": true
+            }
+          }
+        },
+        "refs": {
+          "dbo.project_expense": "currency"
+        }
+      },
+      "dbo.project_expense": {
+        "db": {
+          "name": "project_expense",
+          "schema": "dbo"
+        },
+        "columns": {
+          "proexp_id": {
+            "db": {
+              "type": "bigIncrements",
+              "primary": "PRIMARY",
+              "nullable": false
+            }
+          },
+          "proexp_status": {
+            "db": {
+              "type": "integer",
+              "nullable": false
+            }
+          },
+          "totalExpense": {
+            "db": {
+              "type": "decimal",
+              "nullable": true
+            }
+          },
+          "createdAt": {
+            "db": {
+              "type": "date",
+              "nullable": true
+            }
+          },
+          "editable": {
+            "db": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          "currency": {
+            "db": {
+              "type": "reference",
+              "nullable": true,
+              "references": "currency_id",
+              "inTable": "dbo.currency",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "exp_user_id": {
+            "db": {
+              "type": "reference",
+              "nullable": true,
+              "references": "id",
+              "inTable": "dbo.exp_user",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        },
+        "refs": {
+          "dbo.expense_line": "proexp_id"
+        }
+      },
+      "dbo.expense_line": {
+        "db": {
+          "name": "expense_line",
+          "schema": "dbo"
+        },
+        "columns": {
+          "expline_id": {
+            "db": {
+              "type": "bigIncrements",
+              "primary": "PRIMARY",
+              "nullable": false
+            }
+          },
+          "project_id": {
+            "db": {
+              "type": "reference",
+              "nullable": true,
+              "references": "project_id",
+              "inTable": "dbo.project",
+              "referenceType": "bigInteger",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "ledger_id": {
+            "db": {
+              "type": "reference",
+              "nullable": true,
+              "references": "ledger_id",
+              "inTable": "dbo.ledger_type",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "proexp_id": {
+            "db": {
+              "type": "reference",
+              "nullable": true,
+              "references": "proexp_id",
+              "inTable": "dbo.project_expense",
+              "referenceType": "bigInteger",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          "expline_amount": {
+            "db": {
+              "type": "decimal",
+              "nullable": true
+            }
+          },
+          "exp_date": {
+            "db": {
+              "type": "date",
+              "nullable": true
+            }
+          }
+        }
+      },
+      "dbo.exp_user": {
+        "db": {
+          "name": "exp_user",
+          "schema": "dbo"
+        },
+        "columns": {
+          "id": {
+            "db": {
+              "type": "integer",
+              "primary": "PRIMARY",
+              "nullable": false
+            }
+          },
+          "name": {
+            "db": {
+              "type": "string",
+              "maxLength": 50,
+              "nullable": false
+            }
+          },
+          "email": {
+            "db": {
+              "type": "string",
+              "maxLength": 50,
+              "nullable": false
+            }
+          },
+          "password": {
+            "db": {
+              "type": "string",
+              "maxLength": 50,
+              "nullable": false
+            }
+          },
+          "manager": {
+            "db": {
+              "type": "reference",
+              "nullable": true,
+              "references": "id",
+              "inTable": "dbo.exp_user",
+              "referenceType": "integer",
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        },
+        "refs": {
+          "dbo.project_expense": "exp_user_id"
+        }
+      }
+    },
+    "views": {}
+  }
+}
